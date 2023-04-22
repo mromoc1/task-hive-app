@@ -21,9 +21,9 @@ public class UserController {
     @PostMapping("/createUser")
     public ResponseEntity<String> createUser(@RequestBody UserModel user){
         if(userService.createUser(user)){
-            return new ResponseEntity<String>("User created successfully", HttpStatus.OK);
+            return new ResponseEntity<String>("El usuario fue creado satisfactoriamente.", HttpStatus.OK);
         } else {
-            return new ResponseEntity<String>("User already exists", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("El usuario ingresado no se encuentra disponible", HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -1,8 +1,9 @@
 package com.hhdevs.taskhiveapp.Models;
 
 import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -22,6 +23,9 @@ public class UserModel {
 
     @Column(name = "email")
     private String email;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TaskListModel> taskLists = new ArrayList<>();
 
     public UserModel() {
     }
@@ -64,4 +68,21 @@ public class UserModel {
         this.email = email;
     }
 
+    public List<TaskListModel> getTaskLists() {
+        return taskLists;
+    }
+
+    public void setTaskLists(List<TaskListModel> taskLists) {
+        this.taskLists = taskLists;
+    }
+
+    public void addTaskList(TaskListModel taskList) {
+        taskLists.add(taskList);
+        taskList.setUser(this);
+    }
+
+    public void removeTaskList(TaskListModel taskList) {
+        taskLists.remove(taskList);
+        taskList.setUser(null);
+    }
 }
